@@ -1,13 +1,14 @@
 package com.fullcycle.admin.catalogo.domain.category;
 
+import com.fullcycle.admin.catalogo.domain.AggregateRoot;
+
 import java.time.Instant;
 import java.util.UUID;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Category {
+public class Category extends AggregateRoot<CategoryID> {
 
-    private String id;
     private String name;
     private String description;
     private boolean active;
@@ -17,31 +18,31 @@ public class Category {
     private Instant deleteAt;
 
     private Category(
-                    final String id,
-                    final String name,
-                    final String description,
-                    final boolean active,
-                    final Instant createdAt,
-                    final Instant updateAt,
-                    final Instant deleteAt
+                    final CategoryID anId,
+                    final String aName,
+                    final String aDescription,
+                    final boolean isActive,
+                    final Instant aCreatedAt,
+                    final Instant aUpdateAt,
+                    final Instant aDeleteAt
     ) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.active = active;
-        this.createdAt = createdAt;
-        this.updateAt = updateAt;
-        this.deleteAt = deleteAt;
+        super(anId);
+        this.name = aName;
+        this.description = aDescription;
+        this.active = isActive;
+        this.createdAt = aCreatedAt;
+        this.updateAt = aUpdateAt;
+        this.deleteAt = aDeleteAt;
     }
 
 
     public static Category newCategory(final String expectedName, final String expectedDescription, final boolean expectedIsActive) {
-        final var id = UUID.randomUUID().toString();
+        final var id = CategoryID.unique();
         final var now = Instant.now();
         return new Category(id, expectedName, expectedDescription, expectedIsActive, now, now, null);
     }
 
-    public String getId() {
+    public CategoryID getId() {
         return id;
     }
 
