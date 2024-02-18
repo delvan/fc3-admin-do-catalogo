@@ -4,8 +4,11 @@ import com.fullcycle.admin.catalogo.domain.exceptions.DomainException;
 
 import java.util.List;
 
+//
 public interface ValidationHandler {
 
+    //interface fluente: possibilidade de chamar um metodo, retornar a propria
+    // instancia, encadeano chamadas de metodos
     ValidationHandler append(Error anError) throws DomainException;
 
     ValidationHandler append(ValidationHandler anHandler);
@@ -16,7 +19,7 @@ public interface ValidationHandler {
 
     default boolean hasError(){
 
-        return getErrors() != null && !(getErrors().isEmpty());
+        return getErrors() != null && !getErrors().isEmpty();
     }
 
     public interface Validation{

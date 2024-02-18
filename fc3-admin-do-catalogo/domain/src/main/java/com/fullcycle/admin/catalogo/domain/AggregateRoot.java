@@ -7,8 +7,9 @@ public class AggregateRoot<ID extends Identifier> extends Entity<ID> {
         super(id);
     }
 
+
     @Override
-    public void validate(ValidationHandler handler) {
+    public void validate(final ValidationHandler handler) {
 
     }
 }

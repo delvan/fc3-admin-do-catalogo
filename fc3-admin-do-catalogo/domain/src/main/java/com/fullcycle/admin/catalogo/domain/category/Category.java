@@ -82,6 +82,7 @@ public class Category extends AggregateRoot<CategoryID> {
         return deleteAt;
     }
 
+
     public Category deactivate() {
         if (getDeleteAt() == null) {
             this.deleteAt = Instant.now();

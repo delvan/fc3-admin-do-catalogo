@@ -17,16 +17,18 @@ public class CategoryTest {
         final var expectedDescription = "A categoria mais assistida";
         final var expectedIsActive = true;
 
-        final var aCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
+        final var actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
 
-        Assertions.assertNotNull(aCategory);
-        Assertions.assertNotNull(aCategory.getId());
-        Assertions.assertEquals(expectedName, aCategory.getName());
-        Assertions.assertEquals(expectedDescription, aCategory.getDescription());
-        Assertions.assertEquals(expectedIsActive, aCategory.isActive());
-        Assertions.assertNotNull(aCategory.getCreatedAt());
-        Assertions.assertNotNull(aCategory.getUpdateAt());
-        Assertions.assertNull(aCategory.getDeleteAt());
+        Assertions.assertNotNull(actualCategory);
+
+        Assertions.assertNotNull(actualCategory.getId());
+        Assertions.assertEquals(expectedName, actualCategory.getName());
+        Assertions.assertEquals(expectedDescription, actualCategory.getDescription());
+        Assertions.assertEquals(expectedIsActive, actualCategory.isActive());
+
+        Assertions.assertNotNull(actualCategory.getCreatedAt());
+        Assertions.assertNotNull(actualCategory.getUpdateAt());
+        Assertions.assertNull(actualCategory.getDeleteAt());
         //Assertions.assertNotNull(new Category());
 
     }
@@ -42,7 +44,8 @@ public class CategoryTest {
 
         final var aCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
 
-        final var actualException = Assertions.assertThrows(DomainException.class, ()
+        final var actualException =
+                Assertions.assertThrows(DomainException.class, ()
                 -> aCategory.validate(new ThrowsValidationHandler()));
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());

@@ -4,6 +4,7 @@ import com.fullcycle.admin.catalogo.domain.validation.ValidationHandler;
 
 import java.util.Objects;
 
+//Classe de entidade mais abstrata
 public abstract class Entity<ID extends Identifier> {
     protected final ID id;
 
@@ -16,6 +17,7 @@ public abstract class Entity<ID extends Identifier> {
         return id;
     }
 
+    //ValidationHandler
     public abstract void validate(ValidationHandler handler);
 
     @Override
