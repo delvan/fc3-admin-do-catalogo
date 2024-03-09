@@ -1,11 +1,15 @@
 package com.fullcycle.admin.catalogo.infrastructure;
 
 import com.fullcycle.admin.catalogo.application.UseCase;
+import com.fullcycle.admin.catalogo.infrastructure.configuration.WebServerConfig;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-        System.out.println("OI");
+        System.out.println("Hello Word");
+        SpringApplication.run(WebServerConfig.class, args);
     }
 }
