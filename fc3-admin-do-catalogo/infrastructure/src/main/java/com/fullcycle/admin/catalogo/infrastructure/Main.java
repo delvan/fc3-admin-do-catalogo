@@ -22,7 +22,7 @@ public class Main {
         System.setProperty(AbstractEnvironment.DEFAULT_PROFILES_PROPERTY_NAME, "production");
         SpringApplication.run(WebServerConfig.class, args);
     }
-
+/*
     @Bean
     public ApplicationRunner runner(CategoryRepository repository) {
         return args -> {
@@ -37,4 +37,5 @@ public class Main {
 
         };
     }
+ */
 }
