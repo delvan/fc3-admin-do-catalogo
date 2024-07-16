@@ -33,7 +33,7 @@ public class GetCategoryByIdUseCaseTest {
     }
 
     @Test
-    public void givenAValidId_whenCallsDeleteCategory_shouldReturnCategory() {
+    public void givenAValidId_whenCallsGetCategory_shouldReturnCategory() {
 
         final var expectedName = "Filmes";
         final var expectedDescription = "A categoria mais assistida";

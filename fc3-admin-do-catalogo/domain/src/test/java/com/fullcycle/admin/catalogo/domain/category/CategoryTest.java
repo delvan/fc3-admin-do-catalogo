@@ -1,12 +1,10 @@
 package com.fullcycle.admin.catalogo.domain.category;
 
-import com.fullcycle.admin.catalogo.domain.category.Category;
 import com.fullcycle.admin.catalogo.domain.exceptions.DomainException;
 import com.fullcycle.admin.catalogo.domain.validation.handle.ThrowsValidationHandler;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.time.Instant;
 
 public class CategoryTest {
 
@@ -206,7 +204,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void givenAValidInactiveCategory_whenCallDeactivate_thenReturnCategoryActivated() {
+    public void givenAValidInactiveCategory_whenCallActivate_thenReturnCategoryActivated() {
 
         final var expectedName = "Filmes";
         final var expectedDescription = "A categoria mais assistida";
@@ -214,7 +212,8 @@ public class CategoryTest {
 
         final var aCategory = Category.newCategory(expectedName, expectedDescription, false);
 
-        Assertions.assertDoesNotThrow(() -> aCategory.validate(new ThrowsValidationHandler()));
+        Assertions.assertDoesNotThrow(() -> 
+        aCategory.validate(new ThrowsValidationHandler()));
 
         final var updateAt = aCategory.getUpdateAt();
         final var createdAt = aCategory.getCreatedAt();
@@ -275,6 +274,7 @@ public class CategoryTest {
         final var aCategory = Category.newCategory("Film", "A categoaria", true);
 
         Assertions.assertDoesNotThrow(() -> aCategory.validate(new ThrowsValidationHandler()));
+        
         Assertions.assertTrue(aCategory.isActive());
         Assertions.assertNull(aCategory.getDeleteAt());
 

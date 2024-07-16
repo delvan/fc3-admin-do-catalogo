@@ -75,23 +75,18 @@ public class CategoryMySQLGatewayTest {
         final var aCategory = Category.newCategory("Film", null, expectedIsActive);
 
         Assertions.assertEquals(0, categoryRepository.count());
-
         categoryRepository.saveAndFlush(CategoryJpaEntity.from(aCategory));
-
         Assertions.assertEquals(1, categoryRepository.count());
 
+        //VALORES INVALIDOS
         final var actualInvalidEntity = categoryRepository.getById(aCategory.getId().getValue());
-
         Assertions.assertEquals("Film", actualInvalidEntity.getName());
         Assertions.assertNull(actualInvalidEntity.getDescription());
         Assertions.assertEquals(expectedIsActive, actualInvalidEntity.isActive());
 
         Assertions.assertEquals(1, categoryRepository.count());
-
         final var aUpdateCategory = aCategory.clone().update(expectedName, expectedDescription, expectedIsActive);
-
         final var actualCategory = categoryGateway.update(aUpdateCategory);
-
         Assertions.assertEquals(1, categoryRepository.count());
 
         Assertions.assertEquals(aCategory.getId(), actualCategory.getId());
@@ -148,7 +143,7 @@ public class CategoryMySQLGatewayTest {
 
 
     @Test
-    public void givenAPrePersistedCategoryAndValidCategoryId_whenCallsFindById_shouldReturnACategory() {
+    public void givenAPrePersistedCategoryAndValidCategoryId_whenCallsFindById_shouldReturnCategory() {
         final var expectedName = "filmes";
         final var expectedDescription = "A categoria mais assistida";
         final var expectedIsActive = true;
@@ -309,7 +304,7 @@ public class CategoryMySQLGatewayTest {
     }
 
     @Test
-    public void givenPrePersistedCategoriesAndDocsAsTerms_whenCallsFindAllAndTermsMathsCategoriesName_shouldReturnPaginated() {
+    public void givenPrePersistedCategoriesAndDocsAsTerms_whenCallsFindAllAndTermsMatchsCategoryName_shouldReturnPaginated() {
 
         final var expectedPage = 0;
         final var expectedPerPage = 1;
@@ -345,14 +340,14 @@ public class CategoryMySQLGatewayTest {
     }
 
     @Test
-    public void givenPrePersistedCategoriesAndMaisAssistidaAsTerms_whenCallsFindAllAndTermsMathsCategoriesDescription_shouldReturnPaginated() {
+    public void givenPrePersistedCategoriesAndMaisAssistidaAsTerms_whenCallsFindAllAndTermsMatchsCategoryDescription_shouldReturnPaginated() {
 
         final var expectedPage = 0;
         final var expectedPerPage = 1;
         final var expectedTotal = 1;
 
         final var filmes = Category.newCategory("Filmes", "A categoria mais assistida", true);
-        final var series = Category.newCategory("Series", "Uma categia assistida", true);
+        final var series = Category.newCategory("Series", "Uma categoria assistida", true);
         final var documentarios = Category.newCategory("Documentarios", "A categoria menos assistida", true);
 
         Assertions.assertEquals(0, categoryRepository.count());

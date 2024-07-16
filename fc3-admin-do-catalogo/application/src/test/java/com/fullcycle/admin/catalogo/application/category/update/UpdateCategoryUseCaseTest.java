@@ -53,7 +53,7 @@ public class UpdateCategoryUseCaseTest {
         final var expectedId = aCategory.getId();
         final var aCommand = UpdateCategoryCommand.with(
                 expectedId.getValue(),
-                expectedName,
+                expectedName,  
                 expectedDescription,
                 expectedIsActive
         );
@@ -193,7 +193,7 @@ public class UpdateCategoryUseCaseTest {
     }
 
     @Test
-    public void givenAValidWithInvalidID_whenGatewayThrowsRandomException_shouldReturnNotFoundException() {
+    public void givenACommandWithInvalidID_whenGatewayThrowsRandomException_shouldReturnNotFoundException() {
 
         //final var aCategory = Category.newCategory("Film", null, true);
 

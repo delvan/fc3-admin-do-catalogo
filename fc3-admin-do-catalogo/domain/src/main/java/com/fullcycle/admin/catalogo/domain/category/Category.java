@@ -5,7 +5,6 @@ import com.fullcycle.admin.catalogo.domain.validation.ValidationHandler;
 
 import java.time.Instant;
 import java.util.Objects;
-import java.util.UUID;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -124,19 +123,21 @@ public class Category extends AggregateRoot<CategoryID> implements Cloneable {
 
     }
 
-    public Category update(final String expectedName,
-                           final String expectedDescription,
-                           final boolean expectedIsActive) {
+    public Category update(final String aName,
+                           final String aDescription,
+                           final boolean isActive) {
 
 
-        if (expectedIsActive) {
+        if (isActive) {
             activate();
         } else {
             deactivate();
         }
-        this.name = expectedName;
-        this.description = expectedDescription;
+        this.name = aName;
+        this.description = aDescription;
         //this.active = expectedIsActive;
+        
+        
         this.updatedAt = Instant.now();
         return this;
     }

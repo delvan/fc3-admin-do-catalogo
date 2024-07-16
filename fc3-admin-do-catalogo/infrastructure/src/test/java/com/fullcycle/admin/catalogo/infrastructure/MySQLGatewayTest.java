@@ -1,6 +1,5 @@
 package com.fullcycle.admin.catalogo.infrastructure;
 
-import com.fullcycle.admin.catalogo.infrastructure.category.CategoryMySQLGatewayTest;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -24,10 +23,10 @@ import java.util.Collection;
 public @interface MySQLGatewayTest {
 
 
- class CleanUpExtensions implements BeforeEachCallback {
+ static class CleanUpExtensions implements BeforeEachCallback {
 
         @Override
-        public void beforeEach(final ExtensionContext extensionContext) throws Exception {
+        public void beforeEach(final ExtensionContext extensionContext) {
             final var repositories = SpringExtension
                     .getApplicationContext(extensionContext)
                     .getBeansOfType(CrudRepository.class)

@@ -7,13 +7,11 @@ import com.fullcycle.admin.catalogo.domain.category.CategorySearchQuery;
 import com.fullcycle.admin.catalogo.domain.pagination.Pagination;
 import com.fullcycle.admin.catalogo.infrastructure.category.persistence.CategoryJpaEntity;
 import com.fullcycle.admin.catalogo.infrastructure.category.persistence.CategoryRepository;
-import com.fullcycle.admin.catalogo.infrastructure.utlis.SpecificationUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.*;
 import java.util.Optional;
 
 import static com.fullcycle.admin.catalogo.infrastructure.utlis.SpecificationUtils.like;
@@ -23,7 +21,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
 
     private final CategoryRepository repository;
 
-    public CategoryMySQLGateway(CategoryRepository repository) {
+    public CategoryMySQLGateway(final CategoryRepository repository) {
         this.repository = repository;
     }
 
@@ -47,7 +45,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public Optional<Category> findById(CategoryID anId) {
+    public Optional<Category> findById(final CategoryID anId) {
         return this.repository.findById(anId.getValue()).map(CategoryJpaEntity::toAggregate);
     }
 
@@ -69,16 +67,24 @@ public class CategoryMySQLGateway implements CategoryGateway {
         //busca dinamica pelo criterio terms (name, description)
         final var specificationOptional = Optional.ofNullable(aQuery.terms())
                 .filter(str -> !str.isBlank()).map(str -> {
-                            return SpecificationUtils
-                                    .<CategoryJpaEntity>like("name", str)
+
+                    final Specification<CategoryJpaEntity> nameLike = like("name", str);
+                    final Specification<CategoryJpaEntity> descriptionLike = like("description", str);
+
+                    return nameLike.or(descriptionLike);
+
+                    /*
+                            return SpecificationUtils .<CategoryJpaEntity>like("name", str)
                                     .or(like("description", str));
 
-                        }
 
+                      */
 
-                ).orElse(null);
+                }).orElse(null);
 
         final var pageResult = this.repository.findAll(Specification.where(specificationOptional), page);
+
+
         return new Pagination<>(
                 pageResult.getNumber(),
                 pageResult.getSize(),

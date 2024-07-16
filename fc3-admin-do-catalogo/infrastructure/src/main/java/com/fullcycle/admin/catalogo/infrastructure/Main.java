@@ -1,17 +1,20 @@
 package com.fullcycle.admin.catalogo.infrastructure;
 
-import com.fullcycle.admin.catalogo.application.UseCase;
+import com.fullcycle.admin.catalogo.application.category.create.CreateCategoryUseCase;
 import com.fullcycle.admin.catalogo.domain.category.Category;
 import com.fullcycle.admin.catalogo.infrastructure.category.persistence.CategoryJpaEntity;
 import com.fullcycle.admin.catalogo.infrastructure.category.persistence.CategoryRepository;
 import com.fullcycle.admin.catalogo.infrastructure.configuration.WebServerConfig;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.AbstractEnvironment;
-
-import java.util.List;
 
 
 @SpringBootApplication
@@ -22,9 +25,10 @@ public class Main {
         System.setProperty(AbstractEnvironment.DEFAULT_PROFILES_PROPERTY_NAME, "production");
         SpringApplication.run(WebServerConfig.class, args);
     }
-/*
+
     @Bean
-    public ApplicationRunner runner(CategoryRepository repository) {
+    @DependsOnDatabaseInitialization
+    public ApplicationRunner runner(@Autowired CategoryRepository repository) {
         return args -> {
 
             List<CategoryJpaEntity> all = repository.findAll();
@@ -33,9 +37,10 @@ public class Main {
 
             repository.saveAndFlush(CategoryJpaEntity.from(filmes));
 
+
             repository.deleteAll();
+
 
         };
     }
- */
 }
