@@ -28,19 +28,11 @@ public class Main {
 
     @Bean
     @DependsOnDatabaseInitialization
-    public ApplicationRunner runner(@Autowired CategoryRepository repository) {
+    public ApplicationRunner runner(@Autowired CreateCategoryUseCase useCase) {
+
         return args -> {
 
-            List<CategoryJpaEntity> all = repository.findAll();
-
-            Category filmes = Category.newCategory("Filmes", null, true);
-
-            repository.saveAndFlush(CategoryJpaEntity.from(filmes));
-
-
-            repository.deleteAll();
-
-
         };
+     
     }
 }
