@@ -83,7 +83,7 @@ public class UpdateCategoryUseCaseTest {
     }
 
     @Test
-    public void givenAValidCommand_whenCallsUpdateCategory_shouldReturnDomainException() {
+    public void givenAInvalidName_whenCallsUpdateCategory_shouldReturnDomainException() {
 
         final var aCategory = Category.newCategory("Film", null, true);
 
