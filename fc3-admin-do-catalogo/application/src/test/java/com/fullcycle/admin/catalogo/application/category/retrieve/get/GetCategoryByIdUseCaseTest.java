@@ -1,9 +1,9 @@
 package com.fullcycle.admin.catalogo.application.category.retrieve.get;
 
-import com.fullcycle.admin.catalogo.domain.category.Category;
-import com.fullcycle.admin.catalogo.domain.category.CategoryGateway;
-import com.fullcycle.admin.catalogo.domain.category.CategoryID;
-import com.fullcycle.admin.catalogo.domain.exceptions.DomainException;
+import static org.mockito.ArgumentMatchers.eq;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,9 +13,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.eq;
+import com.fullcycle.admin.catalogo.domain.category.Category;
+import com.fullcycle.admin.catalogo.domain.category.CategoryGateway;
+import com.fullcycle.admin.catalogo.domain.category.CategoryID;
+import com.fullcycle.admin.catalogo.domain.exceptions.NotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 public class GetCategoryByIdUseCaseTest {
@@ -25,7 +26,6 @@ public class GetCategoryByIdUseCaseTest {
 
     @Mock
     private CategoryGateway categoryGateway;
-
 
     @BeforeEach
     void cleanUp() {
@@ -66,8 +66,7 @@ public class GetCategoryByIdUseCaseTest {
                 .thenReturn(Optional.empty());
 
         final var actualException = Assertions.assertThrows(
-                DomainException.class, () -> useCase.execute(expectedId.getValue())
-        );
+                NotFoundException.class, () -> useCase.execute(expectedId.getValue()));
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
 
@@ -79,13 +78,14 @@ public class GetCategoryByIdUseCaseTest {
         final var expectedErrorMessage = "Gateway error";
         final var expectedId = CategoryID.from("123");
 
-        Mockito.when(categoryGateway.findById(eq(expectedId))).thenThrow(new IllegalStateException(expectedErrorMessage));
+        Mockito.when(categoryGateway.findById(eq(expectedId)))
+                .thenThrow(new IllegalStateException(expectedErrorMessage));
 
-        final var actualException = Assertions.assertThrows(IllegalStateException.class, () -> useCase.execute(expectedId.getValue()));
+        final var actualException = Assertions.assertThrows(IllegalStateException.class,
+                () -> useCase.execute(expectedId.getValue()));
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
 
     }
-
 
 }

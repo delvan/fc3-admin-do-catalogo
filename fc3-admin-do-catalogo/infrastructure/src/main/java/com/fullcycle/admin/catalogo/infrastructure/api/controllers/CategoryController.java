@@ -57,8 +57,9 @@ public class CategoryController implements CategoryAPI {
 
     @Override
     public CategoryApiOutput getById(final String id) {
-        // TODO Auto-generated method stub
-        return CategoryApiPresenter.present(this.getCategoryByIdUseCase.execute(id));
+        return CategoryApiPresenter.present
+                .compose(this.getCategoryByIdUseCase::execute)
+                .apply(id);
     }
 
 }

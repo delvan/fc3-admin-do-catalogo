@@ -7,7 +7,8 @@ import com.fullcycle.admin.catalogo.infrastructure.category.models.CategoryApiOu
 
 public interface CategoryApiPresenter {
 
-    Function<CategoryOutput, CategoryApiOutput> present = output -> new CategoryApiOutput(output.id().getValue(),
+    Function<CategoryOutput, CategoryApiOutput> present = output -> new CategoryApiOutput(
+            output.id().getValue(),
             output.name(),
             output.description(),
             output.isActive(),
